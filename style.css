@@ -1,0 +1,152 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #1e1e1e;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left {
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-right a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-right a:hover {
+    background-color: #555;
+}
+
+.navbar-right a.active {
+    background-color: #555;
+}
+
+.hero-section {
+margin-top: 10px;
+background-image: url('https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+background-attachment: fixed;
+background-size: cover;
+background-position: center;
+height: 300px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+color: white;
+}
+
+.intro-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+.intro-section .intro-text {
+    width: 60%;
+    font-size: 18px;
+    line-height: 1.6;
+    color: black;
+}
+
+.intro-section .intro-image img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin-left: 15px;
+}
+
+.fixed-background-section {
+    background-image: url('https://images.pexels.com/photos/1556688/pexels-photo-1556688.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 50px;
+    color: #e0e0e0;
+}
+
+.about-contact-section {
+margin-top: 50px;
+padding: 50px;
+background-image: url('https://t3.ftcdn.net/jpg/01/85/75/08/360_F_185750874_rTbc977EBOkAS5a8lTCuwJYoUqwT0Zkh.jpg'); /* Add your background image URL */
+background-size: cover;
+background-position: center;
+background-attachment: fixed; 
+}
+
+.uk-card {
+background-color: rgba(44, 44, 44, 0.8);
+color: #e0e0e0;
+margin-bottom: 30px; 
+border-radius: 8px;
+padding: 20px;
+width: 80%; 
+max-width: 600px; 
+margin-left: auto;
+margin-right: auto; 
+}
+
+
+.uk-card-title {
+font-size: 24px;
+margin-bottom: 10px;
+text-align: center;
+}
+
+
+.uk-card-body {
+display: block; 
+text-align: justify; 
+}
+
+.about-card, .vision-card, .mission-card, .contact-card {
+box-shadow: none; 
+}
+
+@media (max-width: 768px) {
+.uk-card {
+width: 90%; 
+}
+}
+
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1e1e1e;
+    color: white;
+    margin-top: 50px;
+}

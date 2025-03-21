@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOS Burgers - Orders</title>
+    <link rel="stylesheet" href="/CSS/orders-styles.css">
+</head>
+<body>
+    <header>
+        <h1>MOS Burgers - Orders</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pages/menu.html">Menu</a></li>
+                <li><a href="/pages/customers.html">Customers</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="order-section">
+            <h2>Place an Order</h2>
+            <form id="order-form">
+                <label for="customer-name">Customer Name:</label>
+                <input type="text" id="customer-name" required><br>
+
+                <label for="customer-contact">Contact Number:</label>
+                <input type="text" id="customer-contact" required><br>
+
+                <label for="item-select">Select Item:</label>
+                <select id="item-select">
+                    <!-- Dynamically populated with menu items -->
+                </select><br>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" required><br>
+
+                <button type="submit">Add to Order</button>
+            </form>
+
+            <h3>Order Summary</h3>
+            <table id="order-summary">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Order items will be dynamically added here -->
+                </tbody>
+            </table>
+
+            <label for="discount">Apply Discount (%)</label>
+            <input type="number" id="discount" min="0" max="100"><br>
+            <button id="apply-discount">Apply Discount</button>
+
+            <h4>Total: $<span id="total-price">0.00</span></h4>
+            <button id="finalize-order">Finalize Order</button>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Orders Page Loaded Successfully");
+            loadMenuItems();
+        });
+
+        // Sample menu items (this can be dynamically fetched from your menu data)
+        let menuItems = [
+            { code: "B001", name: "Classic Burger", price: 5.99 },
+            { code: "B002", name: "Cheese Burger", price: 6.99 },
+            { code: "D001", name: "Coke", price: 1.99 }
+        ];
+
+        let orderItems = [];
+
+        // Function to load menu items into the dropdown
+        function loadMenuItems() {
+            let itemSelect = document.getElementById("item-select");
+            menuItems.forEach(item => {
+                let option = document.createElement("option");
+                option.value = item.code;
+                option.textContent = item.name + " - $" + item.price.toFixed(2);
+                itemSelect.appendChild(option);
+            });
+        }
+
+        // Handle adding items to the order
+        document.getElementById("order-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let customerName = document.getElementById("customer-name").value;
+            let customerContact = document.getElementById("customer-contact").value;
+            let selectedItemCode = document.getElementById("item-select").value;
+            let selectedItem = menuItems.find(item => item.code === selectedItemCode);
+            let quantity = parseInt(document.getElementById("quantity").value);
+            let totalPrice = selectedItem.price * quantity;
+
+            if (customerName && customerContact && selectedItem && quantity > 0) {
+                orderItems.push({ name: selectedItem.name, quantity, price: selectedItem.price, total: totalPrice });
+                updateOrderSummary();
+                calculateTotal();
+            }
+        });
+
+        // Function to update the order summary table
+        function updateOrderSummary() {
+            let orderSummaryTable = document.getElementById("order-summary").getElementsByTagName("tbody")[0];
+            orderSummaryTable.innerHTML = "";
+            orderItems.forEach((item, index) => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>$${item.total.toFixed(2)}</td>
+                    <td><button onclick="removeItem(${index})">Remove</button></td>
+                `;
+                orderSummaryTable.appendChild(row);
+            });
+        }
+
+        // Function to remove an item from the order
+        function removeItem(index) {
+            orderItems.splice(index, 1);
+            updateOrderSummary();
+            calculateTotal();
+        }
+
+        // Apply discount
+        document.getElementById("apply-discount").addEventListener("click", function() {
+            let discount = parseFloat(document.getElementById("discount").value);
+            if (!isNaN(discount) && discount >= 0 && discount <= 100) {
+                calculateTotal(discount);
+            } else {
+                alert("Invalid discount value.");
+            }
+        });
+
+        // Calculate total price
+        function calculateTotal(discount = 0) {
+            let total = orderItems.reduce((sum, item) => sum + item.total, 0);
+            total = total - (total * (discount / 100));
+            document.getElementById("total-price").textContent = total.toFixed(2);
+        }
+
+        // Finalize the order
+        document.getElementById("finalize-order").addEventListener("click", function() {
+            if (orderItems.length > 0) {
+                alert("Order finalized! Total: $" + document.getElementById("total-price").textContent);
+                orderItems = []; // Clear the order after finalizing
+                updateOrderSummary();
+            } else {
+                alert("No items in the order.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - MOS Burgers</title>
+    <link rel="stylesheet" href="/CSS/menu-styles.css">
+</head>
+<body>
+    <header>
+        <h1>MOS Burgers -  Menu</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pages/orders.html">Orders</a></li>
+                <li><a href="/pages/customers.html">Customers</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="menu-section">
+            <h2>Menu</h2>
+            <button onclick="addMenuItem()">Add New Item</button>
+            <table id="menu-table">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Menu items will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Menu Loaded Successfully");
+            loadMenu();
+        });
+
+        let menuItems = [
+            { code: "B001", name: "Classic Burger", category: "Burgers", price: 5.99 },
+            { code: "B002", name: "Cheese Burger", category: "Burgers", price: 6.99 },
+            { code: "D001", name: "Coke", category: "Drinks", price: 1.99 }
+        ];
+
+        function loadMenu() {
+            let tableBody = document.querySelector("#menu-table tbody");
+            tableBody.innerHTML = "";
+            menuItems.forEach((item, index) => {
+                let row = `<tr>
+                    <td>${item.code}</td>
+                    <td>${item.name}</td>
+                    <td>${item.category}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <button onclick="editMenuItem(${index})">Edit</button>
+                        <button onclick="deleteMenuItem(${index})">Delete</button>
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function addMenuItem() {
+            let code = prompt("Enter Item Code:");
+            let name = prompt("Enter Item Name:");
+            let category = prompt("Enter Category:");
+            let price = parseFloat(prompt("Enter Price:"));
+            if (code && name && category && !isNaN(price)) {
+                menuItems.push({ code, name, category, price });
+                loadMenu();
+            } else {
+                alert("Invalid input. Please try again.");
+            }
+        }
+
+        function editMenuItem(index) {
+            let newPrice = parseFloat(prompt("Enter New Price:", menuItems[index].price));
+            if (!isNaN(newPrice)) {
+                menuItems[index].price = newPrice;
+                loadMenu();
+            } else {
+                alert("Invalid price.");
+            }
+        }
+
+        function deleteMenuItem(index) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                menuItems.splice(index, 1);
+                loadMenu();
+            }
+        }
+    </script>
+</body>
+</html>

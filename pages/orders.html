@@ -30,7 +30,7 @@
 
                 <label for="item-select">Select Item:</label>
                 <select id="item-select">
-                    <!-- Dynamically populated with menu items -->
+                    
                 </select><br>
 
                 <label for="quantity">Quantity:</label>
@@ -51,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Order items will be dynamically added here -->
+                   
                 </tbody>
             </table>
 
@@ -70,7 +70,7 @@
             loadMenuItems();
         });
 
-        // Sample menu items (this can be dynamically fetched from your menu data)
+        
         let menuItems = [
             { code: "B001", name: "Classic Burger", price: 5.99 },
             { code: "B002", name: "Cheese Burger", price: 6.99 },
@@ -79,7 +79,7 @@
 
         let orderItems = [];
 
-        // Function to load menu items into the dropdown
+        
         function loadMenuItems() {
             let itemSelect = document.getElementById("item-select");
             menuItems.forEach(item => {
@@ -90,7 +90,7 @@
             });
         }
 
-        // Handle adding items to the order
+        
         document.getElementById("order-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -108,7 +108,7 @@
             }
         });
 
-        // Function to update the order summary table
+        
         function updateOrderSummary() {
             let orderSummaryTable = document.getElementById("order-summary").getElementsByTagName("tbody")[0];
             orderSummaryTable.innerHTML = "";
@@ -125,14 +125,14 @@
             });
         }
 
-        // Function to remove an item from the order
+        
         function removeItem(index) {
             orderItems.splice(index, 1);
             updateOrderSummary();
             calculateTotal();
         }
 
-        // Apply discount
+        
         document.getElementById("apply-discount").addEventListener("click", function() {
             let discount = parseFloat(document.getElementById("discount").value);
             if (!isNaN(discount) && discount >= 0 && discount <= 100) {
@@ -142,18 +142,18 @@
             }
         });
 
-        // Calculate total price
+        
         function calculateTotal(discount = 0) {
             let total = orderItems.reduce((sum, item) => sum + item.total, 0);
             total = total - (total * (discount / 100));
             document.getElementById("total-price").textContent = total.toFixed(2);
         }
 
-        // Finalize the order
+        
         document.getElementById("finalize-order").addEventListener("click", function() {
             if (orderItems.length > 0) {
                 alert("Order finalized! Total: $" + document.getElementById("total-price").textContent);
-                orderItems = []; // Clear the order after finalizing
+                orderItems = [];
                 updateOrderSummary();
             } else {
                 alert("No items in the order.");
